@@ -30,6 +30,29 @@ build:
 	../..)
 	make -C build/rel VERBOSE=${VERBOSE} PREFIX=${PREFIX}
 
+wasm-data:
+	mkdir -p build/linux32
+	(cd build/linux32; cmake \
+	-DENABLE_GTEST:BOOL=OFF \
+	-DCMAKE_BUILD_TYPE=Release \
+	-DCMAKE_INSTALL_PREFIX=${PREFIX} \
+	-DCMAKE_CXX_FLAGS="${CMAKE_CXX_FLAGS} -m32" \
+	../..)
+	make -C build/linux32 VERBOSE=${VERBOSE} PREFIX=${PREFIX}
+
+wasm: wasm-data
+	mkdir -p build/wasm
+	cp -rf build/linux32/data build/wasm
+	(cd build/wasm; emcmake cmake \
+	-DENABLE_GTEST:BOOL=OFF \
+	-DCMAKE_BUILD_TYPE=Debug \
+	-DCMAKE_INSTALL_PREFIX=${PREFIX} \
+	-DBUILD_SHARED_LIBS:BOOL=OFF \
+	-DBUILD_FOR_WASM:BOOL=ON \
+	-DCMAKE_CXX_FLAGS="${CMAKE_CXX_FLAGS} -s WASM=1 -s ASSERTIONS=1 -s DISABLE_EXCEPTION_CATCHING=0 --memory-init-file 0" \
+	../..)
+	make -C build/wasm VERBOSE=${VERBOSE} PREFIX=${PREFIX}
+
 package: build
 	make -C build/rel package_source VERBOSE=${VERBOSE}
 	make -C build/rel package_source VERBOSE=${VERBOSE} PREFIX=${PREFIX}

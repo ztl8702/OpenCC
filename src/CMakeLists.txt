@@ -117,5 +117,8 @@ if (ENABLE_GTEST)
 endif()
 
 # Subdir
-
-add_subdirectory(tools)
+if (NOT BUILD_FOR_WASM)
+  add_subdirectory(tools)
+else()
+  message("Building for wasm, disabling tools...")
+endif()

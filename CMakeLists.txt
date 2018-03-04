@@ -155,7 +155,11 @@ endif()
 
 add_subdirectory(src)
 add_subdirectory(doc)
-add_subdirectory(data)
+if (NOT BUILD_FOR_WASM)
+  add_subdirectory(data)
+else()
+  message("==== Building for wasm, disabling data build.")
+endif()
 add_subdirectory(test)
 
 ######## Testing
