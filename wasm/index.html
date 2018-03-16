@@ -1,14 +1,95 @@
+<!DOCTYPE html>
 <html>
-    <meta charset="UTF-8"> 
-<body>
 
-    <script src="opencc_bindings.js"></script>
-    <script>
-     // console.log('lerp result: ' + Module.lerp(1, 2, 0.5));
-        var enc = new TextEncoder("utf-8");
-        function t2s(str) {
-            return Module.convert("hk2s",enc.encode(str));
-        }
-    </script>
+<head>
+    <title>開放中文轉換 Open Chinese Convert (OpenCC)</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta name="keywords" content="OpenCC, 簡繁轉換, 簡化字, 簡體字, 繁體字, 正體字, 简繁转换, 在线简繁转换, 简化字, 简体字, 繁体字, 正体字, 異體字, 异体字, BYVoid">
+    <meta name="description" content="OpenCC簡繁轉換">
+    <link rel="stylesheet" href="//ajax.aspnetcdn.com/ajax/jquery.ui/1.10.3/themes/flick/jquery-ui.css">
+    <link rel="stylesheet" href="custom.css">
+</head>
+
+<body>
+    <div id="wrapper">
+        <div id="header">
+            <div style="float: left">
+                <a href="https://github.com/ztl8702/OpenCC-wasm" target="_blank">
+                    <img src="https://storage.googleapis.com/google-code-archive/v2/code.google.com/opencc/logo.png" alt="OpenCC">
+                </a>
+            </div>
+            <h1>
+                <a href="https://github.com/ztl8702/OpenCC-wasm">開放中文轉換 (Open Chinese Convert) <small><sup>on WebAssembly</sup></small></a>
+            </h1>
+        </div>
+        <script src="//ajax.aspnetcdn.com/ajax/jQuery/jquery-1.10.2.min.js"></script>
+        <script src="//ajax.aspnetcdn.com/ajax/jquery.ui/1.10.3/jquery-ui.min.js"></script>
+        <div id="main-tabs">
+            <ul>
+                <li>
+                    <a href="#main-tabs-conversion">在線轉換</a>
+                </li>
+            </ul>
+            <div id="main-tabs-conversion">
+                <div id="orig-type" class="option">原文
+                    <input id="orig-type-simp" type="radio" name="orig-type" checked="checked" value="simp">
+                    <label for="orig-type-simp">簡體</label>
+                    <input id="orig-type-trad" type="radio" name="orig-type" value="trad">
+                    <label for="orig-type-trad">繁體</label>
+                </div>
+                <div id="tar-type" class="option">目標
+                    <input id="tar-type-simp" type="radio" name="tar-type" value="simp">
+                    <label for="tar-type-simp">簡體</label>
+                    <input id="tar-type-trad" type="radio" name="tar-type" checked="checked" value="trad">
+                    <label for="tar-type-trad">繁體</label>
+                </div>
+                <div id="variant-type" class="option">異體字轉換
+                    <input id="variant-type-opencc" type="radio" name="variant-type" checked="checked" value="opencc">
+                    <label for="variant-type-opencc">OpenCC標準</label>
+                    <input id="variant-type-taiwan" type="radio" name="variant-type" value="taiwan">
+                    <label for="variant-type-taiwan">臺灣標準</label>
+                    <input id="variant-type-hongkong" type="radio" name="variant-type" value="hongkong">
+                    <label for="variant-type-hongkong">香港標準</label>
+                </div>
+                <div id="idiom-type" class="option">地域用詞轉換
+                    <input id="idiom-type-disabled" type="radio" name="idiom-type" checked="checked" value="disabled">
+                    <label for="idiom-type-disabled">不轉換</label>
+                    <input id="idiom-type-mainland" type="radio" name="idiom-type" value="mainland">
+                    <label for="idiom-type-mainland">中國大陸模式</label>
+                    <input id="idiom-type-taiwan" type="radio" name="idiom-type" value="taiwan">
+                    <label for="idiom-type-taiwan">臺灣模式</label>
+                </div>
+                <textarea id="text"></textarea>
+                <div id="proof"></div>
+                <div id="selector">
+                    <ul></ul>
+                </div>
+                <div>
+                    <button id="convert">轉換</button>
+                    <button id="new-convert">新轉換</button>
+                </div>
+                <div id="dialog-config-error" title="無效配置" style="display:none;">
+                    <p>您選擇的轉換模式是無效的。</p>
+                </div>
+                <div id="dialog-request-error" title="轉換失敗" style="display:none;">
+                    <p></p>
+                </div>
+                <p>
+                    <a href="https://github.com/BYVoid/OpenCC">關於OpenCC</a>
+                    <a href="https://github.com/ztl8702/OpenCC-wasm">關於OpenCC on WebAssembly</a>
+                </p>
+            </div>
+        </div>
+        <script src="opencc_bindings.js"></script>
+        <script>
+            var enc = new TextEncoder("utf-8");
+            function opencc_convert(c,str) {
+                return Module.convert(c,enc.encode(str));
+            }
+        </script>
+        <script src="index.js"></script>
+                
+    </div>
 </body>
+
 </html>

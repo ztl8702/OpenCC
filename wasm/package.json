@@ -3,5 +3,16 @@
   "version": "1.0.0",
   "description": "A demo of using OpenCC in the browser with WebAssembly",
   "main": "index.js",
-  "license": "MIT"
+  "license": "MIT",
+  "dependencies": {
+    "uikit": "^3.0.0-beta.40",
+    "wasm-loader": "^1.3.0"
+  },
+  "devDependencies": {
+    "webpack": "^4.1.1",
+    "webpack-cli": "^2.0.12"
+  },
+  "scripts": {
+    "pack": "webpack --config webpack.config.js"
+  }
 }
