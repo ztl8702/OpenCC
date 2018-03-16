@@ -11,3 +11,7 @@
 /test/dict.bin
 /xcode
 /node_modules
+wasm/OpenCCTest.data
+wasm/OpenCCTest.html
+wasm/OpenCCTest.wasm
+wasm/OpenCCTest.js

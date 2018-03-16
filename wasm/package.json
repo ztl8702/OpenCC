@@ -1,0 +1,7 @@
+{
+  "name": "opencc-wasm-demo",
+  "version": "1.0.0",
+  "description": "A demo of using OpenCC in the browser with WebAssembly",
+  "main": "index.js",
+  "license": "MIT"
+}
