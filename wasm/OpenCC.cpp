@@ -25,37 +25,6 @@ std::map<std::string,std::string> configJson = // new std::map<std::string,std::
 
 std::map<std::string, opencc::ConverterPtr> converters = {};
 std::wstring_convert<std::codecvt_utf8_utf16<wchar_t>> ws_converter;
-int main() {
-    opencc::Config config;
-    std::string inputString = "香港繁體字來自羅馬简体字呢?";
-    //std::string inputString = "體";
-    opencc::ConverterPtr cvt;
-    try {
-        auto json = configJson["hk2s"];
-        cvt = config.NewFromString(*(new std::string(json)), "data/");
-    } catch (const std::exception& e) {
-        std::cout<<e.what()<<std::endl;
-    } catch (const opencc::Exception& e) {
-        std::cout<<e.what()<<std::endl;
-    } catch (...) {
-        std::cout<<"Unknown exception\n";
-    }
-
-    std::cout<<"config loaded"<<std::endl;
-
-    try {
-         std::cout<<inputString<< cvt->Convert(inputString) <<std::endl;
-
-    } catch (const std::exception& e) {
-        std::cout<<e.what()<<std::endl;
-    } catch (const opencc::Exception& e) {
-        std::cout<<e.what()<<std::endl;
-    } catch (...) {
-        std::cout<<"Unknown exception\n";
-    }
-
-    return 0;
-}
 
 std::wstring convert(std::string configType, std::string inputString){
     if (configJson.find(configType) == configJson.end()) {
